@@ -14,18 +14,20 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
 app.use(cors())
-// app.get('/',(req,res)=>{
-//     res.send('welcom Home page')
-// })
+
 // routes
 app.use('/users',userRoutes)
 app.use('/auth',authRoutes)
 
-mongoose.connect(process.env.DB_CONNECTION,{useNewUrlParser:true},()=>{
-    console.log('db connection successful');
+mongoose.connect(process.env.LOCAL_DB,{useNewUrlParser:true},async (err, db)=>{
+    if(!err)
+    {
+       await app.listen(process.env.PORT,()=>{
+            console.log('Bakend is runing');
+        })
+        console.log('db connection successful ... %d',db);
+    }
+    else console.warn('db connection errors ...');
 })
 
 
-app.listen(process.env.PORT,()=>{
-    console.log('Bakend is runing');
-})
