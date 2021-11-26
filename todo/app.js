@@ -22,7 +22,6 @@ app.use((err,req,res,next) => {
     res.status(500).json({message:err.message});
 })
 
-// routes
 // app.use('/users',userRoutes)
 // app.use('/auth',authRoutes)
 app.use('/todos',todoRoutes)
