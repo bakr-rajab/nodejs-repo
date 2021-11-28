@@ -36,11 +36,8 @@ exports.show = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
   try {
-    const oldTodo = await Todo.findById(req.params.id);
-    oldTodo.title=req.body.title;
-    oldTodo.status=req.body.status;
-    const todo=await oldTodo.save();
-    res.json(todo);
+    const updateTodo=await Todo.findOneAndUpdate({"_id":req.params.id},req.body,{new:true});
+    res.status(201).json(updateTodo);
   } catch (error) {
     next(error);
   }
